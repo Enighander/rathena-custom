@@ -17,7 +17,7 @@
         set .buymsg$,"Here is what I have for sale:";
         set .nomsg$,"Sorry, I'm not buying anything right now.";
         set .endmsg$,"Come back soon!";
-		set .map$,"prontera";
+	set .map$,"prontera";
         set .x$,155;
         set .y$,184;
         end;
