@@ -11,36 +11,49 @@
 //= 1.2 Update for monster mode and enchants [Lemongrass]
 //============================================================
 
-- script Tool Dealer 4,{
-    npc "Card Seller",prontera,155,184,4;
+- script Card_Dealer 4,{
+    OnInit:
+        set .npc$,"Card Dealer";
+        set .buymsg$,"Here is what I have for sale:";
+        set .nomsg$,"Sorry, I'm not buying anything right now.";
+        set .endmsg$,"Come back soon!";
+		set .map$,"prontera";
+        set .x$,155;
+        set .y$,184;
+        end;
+        
     OnTouch:
-    mes "[Card Seller]";
-    mes "Welcome to my shop!";
-    next;
-    
-    mes "[Card Seller]";
-    mes "What can I help you with today?";
-    next;
-    
-    switch (select("Buy", "Sell", "Cancel")) {
-        case 1:
-            mes "[Card Seller]";
-            mes "Here is what I have for sale:";
-            next;
-            
-            // Specify the items that the NPC will sell
-            sell 501, Red Potion, 10 zeny;
-            sell 502, Orange Potion, 20 zeny;
-            sell 503, Yellow Potion, 30 zeny;
-            
-            close;
-        case 2:
-            mes "[Card Seller]";
-            mes "Sorry, I'm not buying anything right now.";
-            close;
-        case 3:
-            mes "[Card Seller]";
-            mes "Come back soon!";
-            close;
-    }
+        mes .npc$ + ":";
+        mes "Welcome to my card shop!";
+        next;
+        
+        mes .npc$ + ":";
+        mes "What can I help you with today?";
+        next;
+        
+        switch(select(.buymsg$, .nomsg$, "Cancel")) {
+            case 1:
+                mes .npc$ + ":";
+                mes .buymsg$;
+                next;
+                
+                // Specify the cards that the NPC will sell
+                specialeffect2 EF_MAGICCART, .map$, .x$, .y$;
+                npcshopattach "Card Dealer";
+                npcshopadditem 4001, 1000, 0;
+                npcshopadditem 4002, 2000, 0;
+                npcshopadditem 4003, 3000, 0;
+                npcshopopen;
+                
+                close;
+            case 2:
+                mes .npc$ + ":";
+                mes .nomsg$;
+                close;
+            case 3:
+                mes .npc$ + ":";
+                mes .endmsg$;
+                close;
+        }
 }
+
